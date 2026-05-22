@@ -1,4 +1,8 @@
 package com.librarymanagement.enums;
 
-public class BookCategory {
-}
+    public enum BookCategory {
+        FICCION,
+        TECNOLOGIA,
+        CIENCIA,
+        HISTORIA
+    }
