@@ -38,4 +38,4 @@ src
 
 ## Author
 
-Sergio Silva
+Camila Dueñas
