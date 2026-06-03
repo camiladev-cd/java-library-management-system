@@ -10,9 +10,12 @@
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=flat-square&logo=docker)](https://docs.docker.com/compose/)
 [![JWT](https://img.shields.io/badge/JWT-Auth-black?style=flat-square&logo=jsonwebtokens)](https://jwt.io/)
 [![Swagger](https://img.shields.io/badge/Swagger-OpenAPI_3-85EA2D?style=flat-square&logo=swagger)](https://swagger.io/)
+[![Tests](https://img.shields.io/badge/Tests-17%20passing-success?style=flat-square&logo=junit5)](https://junit.org/junit5/)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
 
 [English](#english) · [Español](#español)
+
+**Live API:** https://java-library-management-system.onrender.com/swagger-ui.html
 
 </div>
 
@@ -36,7 +39,7 @@ This project is a migration from a Java console application to a professional RE
 - 🌐 **Swagger UI** — interactive API documentation with Bearer auth support
 - ⚠️ **Global exception handling** — consistent error responses across all endpoints
 - 🐘 **PostgreSQL + Docker** — containerized database with pgAdmin
-- 🧪 **Unit & integration tests** — JUnit 5, Mockito and Testcontainers
+- 🧪 **Unit tests** — JUnit 5 and Mockito, 17 tests passing
 
 ### Tech Stack
 
@@ -50,24 +53,27 @@ This project is a migration from a Java console application to a professional RE
 | Documentation | SpringDoc OpenAPI 3 (Swagger UI) |
 | Mapping | MapStruct 1.5.5 |
 | Containerization | Docker + Docker Compose |
-| Testing | JUnit 5, Mockito, Testcontainers |
+| Testing | JUnit 5, Mockito |
 | Build | Maven 3.9+ |
 
 ### Project Structure
 
 ```
 src/
-└── main/
+├── main/
+│   └── java/com/librarymanagement/
+│       ├── controller/       # REST controllers
+│       ├── service/          # Business logic
+│       ├── repository/       # Spring Data JPA repositories
+│       ├── model/            # JPA entities
+│       ├── dto/              # Request and response DTOs
+│       ├── enums/            # BookCategory, LoanStatus, Role
+│       ├── security/         # JWT filter, SecurityConfig
+│       ├── exception/        # GlobalExceptionHandler, custom exceptions
+│       └── config/           # OpenAPI, beans
+└── test/
     └── java/com/librarymanagement/
-        ├── controller/       # REST controllers
-        ├── service/          # Business logic
-        ├── repository/       # Spring Data JPA repositories
-        ├── model/            # JPA entities
-        ├── dto/              # Request and response DTOs
-        ├── enums/            # BookCategory, LoanStatus, Role
-        ├── security/         # JWT filter, SecurityConfig
-        ├── exception/        # GlobalExceptionHandler, custom exceptions
-        └── config/           # OpenAPI, beans
+        └── service/          # Unit tests
 ```
 
 ### Getting Started
@@ -81,8 +87,8 @@ src/
 #### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/library-management-system.git
-cd library-management-system
+git clone https://github.com/camiladev-cd/java-library-management-system.git
+cd java-library-management-system
 ```
 
 #### 2. Configure environment variables
@@ -103,7 +109,7 @@ docker compose up -d
 #### 4. Run the application
 
 ```bash
-mvn spring-boot:run -Dspring-boot.run.profiles=dev
+mvn spring-boot:run
 ```
 
 #### 5. Explore the API
@@ -128,7 +134,7 @@ To authenticate in Swagger UI:
 
 | Method | Endpoint | Role | Description |
 |---|---|---|---|
-| `GET` | `/api/v1/books` | USER, ADMIN | List all books (paginated) |
+| `GET` | `/api/v1/books` | USER, ADMIN | List all books |
 | `GET` | `/api/v1/books/{id}` | USER, ADMIN | Get book by ID |
 | `GET` | `/api/v1/books/available` | USER, ADMIN | List available books |
 | `POST` | `/api/v1/books` | ADMIN | Register a new book |
@@ -158,29 +164,25 @@ To authenticate in Swagger UI:
 ### Running Tests
 
 ```bash
-# Unit tests only
 mvn test
-
-# Unit + integration tests (requires Docker for Testcontainers)
-mvn verify
 ```
 
 ### Deployment
 
-This API is deployed on [Render](https://render.com). The `render.yaml` at the project root defines both the web service and the managed PostgreSQL database.
+This API is deployed on [Render](https://render.com).
 
-Live URL: `https://library-api.onrender.com` *(replace with your actual URL)*
+Live URL: https://java-library-management-system.onrender.com/swagger-ui.html
 
 > **Note:** The free tier on Render spins down after 15 minutes of inactivity. The first request may take 30–60 seconds to respond.
 
 ### Environment Variables
 
-| Variable | Description | Default |
-|---|---|---|
-| `POSTGRES_DB` | Database name | `library_db` |
-| `POSTGRES_USER` | Database user | `library_user` |
-| `POSTGRES_PASSWORD` | Database password | — |
-| `JWT_SECRET` | Secret key for signing tokens (min 256-bit) | — |
+| Variable | Description |
+|---|---|
+| `SPRING_DATASOURCE_URL` | PostgreSQL connection URL |
+| `SPRING_DATASOURCE_USERNAME` | Database user |
+| `SPRING_DATASOURCE_PASSWORD` | Database password |
+| `JWT_SECRET` | Secret key for signing tokens (min 256-bit) |
 
 ---
 
@@ -202,7 +204,7 @@ Este proyecto es una migración de una aplicación de consola en Java a una API 
 - 🌐 **Swagger UI** — documentación interactiva con soporte de autenticación Bearer
 - ⚠️ **Manejo global de excepciones** — respuestas de error consistentes en todos los endpoints
 - 🐘 **PostgreSQL + Docker** — base de datos en contenedor con pgAdmin
-- 🧪 **Tests unitarios e integración** — JUnit 5, Mockito y Testcontainers
+- 🧪 **Tests unitarios** — JUnit 5 y Mockito, 17 tests pasando
 
 ### Stack tecnológico
 
@@ -216,24 +218,27 @@ Este proyecto es una migración de una aplicación de consola en Java a una API 
 | Documentación | SpringDoc OpenAPI 3 (Swagger UI) |
 | Mapeo | MapStruct 1.5.5 |
 | Contenedores | Docker + Docker Compose |
-| Tests | JUnit 5, Mockito, Testcontainers |
+| Tests | JUnit 5, Mockito |
 | Build | Maven 3.9+ |
 
 ### Estructura del proyecto
 
 ```
 src/
-└── main/
+├── main/
+│   └── java/com/librarymanagement/
+│       ├── controller/       # Controladores REST
+│       ├── service/          # Lógica de negocio
+│       ├── repository/       # Repositorios Spring Data JPA
+│       ├── model/            # Entidades JPA
+│       ├── dto/              # DTOs de request y response
+│       ├── enums/            # BookCategory, LoanStatus, Role
+│       ├── security/         # Filtro JWT, SecurityConfig
+│       ├── exception/        # GlobalExceptionHandler, excepciones custom
+│       └── config/           # OpenAPI, beans
+└── test/
     └── java/com/librarymanagement/
-        ├── controller/       # Controladores REST
-        ├── service/          # Lógica de negocio
-        ├── repository/       # Repositorios Spring Data JPA
-        ├── model/            # Entidades JPA
-        ├── dto/              # DTOs de request y response
-        ├── enums/            # BookCategory, LoanStatus, Role
-        ├── security/         # Filtro JWT, SecurityConfig
-        ├── exception/        # GlobalExceptionHandler, excepciones custom
-        └── config/           # OpenAPI, beans
+        └── service/          # Tests unitarios
 ```
 
 ### Inicio rápido
@@ -247,8 +252,8 @@ src/
 #### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/tu-usuario/library-management-system.git
-cd library-management-system
+git clone https://github.com/camiladev-cd/java-library-management-system.git
+cd java-library-management-system
 ```
 
 #### 2. Configurar variables de entorno
@@ -269,7 +274,7 @@ docker compose up -d
 #### 4. Ejecutar la aplicación
 
 ```bash
-mvn spring-boot:run -Dspring-boot.run.profiles=dev
+mvn spring-boot:run
 ```
 
 #### 5. Explorar la API
@@ -294,7 +299,7 @@ Para autenticarte en Swagger UI:
 
 | Método | Endpoint | Rol | Descripción |
 |---|---|---|---|
-| `GET` | `/api/v1/books` | USER, ADMIN | Listar todos los libros (paginado) |
+| `GET` | `/api/v1/books` | USER, ADMIN | Listar todos los libros |
 | `GET` | `/api/v1/books/{id}` | USER, ADMIN | Obtener libro por ID |
 | `GET` | `/api/v1/books/available` | USER, ADMIN | Listar libros disponibles |
 | `POST` | `/api/v1/books` | ADMIN | Registrar un nuevo libro |
@@ -324,34 +329,30 @@ Para autenticarte en Swagger UI:
 ### Ejecutar tests
 
 ```bash
-# Solo tests unitarios
 mvn test
-
-# Tests unitarios + integración (requiere Docker para Testcontainers)
-mvn verify
 ```
 
 ### Deploy
 
-Esta API está desplegada en [Render](https://render.com). El archivo `render.yaml` en la raíz del proyecto define tanto el servicio web como la base de datos PostgreSQL administrada.
+Esta API está desplegada en [Render](https://render.com).
 
-URL en producción: `https://library-api.onrender.com` *(reemplaza con tu URL real)*
+URL en producción: https://java-library-management-system.onrender.com/swagger-ui.html
 
 > **Nota:** El tier gratuito de Render se apaga tras 15 minutos de inactividad. La primera petición puede tardar 30–60 segundos en responder.
 
 ### Variables de entorno
 
-| Variable | Descripción | Por defecto |
-|---|---|---|
-| `POSTGRES_DB` | Nombre de la base de datos | `library_db` |
-| `POSTGRES_USER` | Usuario de la base de datos | `library_user` |
-| `POSTGRES_PASSWORD` | Contraseña de la base de datos | — |
-| `JWT_SECRET` | Clave secreta para firmar tokens (mín. 256-bit) | — |
+| Variable | Descripción |
+|---|---|
+| `SPRING_DATASOURCE_URL` | URL de conexión a PostgreSQL |
+| `SPRING_DATASOURCE_USERNAME` | Usuario de la base de datos |
+| `SPRING_DATASOURCE_PASSWORD` | Contraseña de la base de datos |
+| `JWT_SECRET` | Clave secreta para firmar tokens (mín. 256-bit) |
 
 ---
 
 <div align="center">
 
-Made with ☕ by [Sergio Silva](https://github.com/your-username)
+Made with ☕ by [Sergio Silva](https://github.com/camiladev-cd)
 
 </div>
