@@ -1,0 +1,34 @@
+services:
+  # ── Spring Boot Web Service ──────────────────────────────────────
+  - type: web
+    name: library-management-api
+    env: docker
+    plan: free
+    region: oregon
+    branch: master
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        fromDatabase:
+          name: library-db
+          property: connectionString
+      - key: SPRING_DATASOURCE_USERNAME
+        fromDatabase:
+          name: library-db
+          property: user
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: library-db
+          property: password
+      - key: JWT_SECRET
+        generateValue: true
+      - key: SPRING_JPA_HIBERNATE_DDL_AUTO
+        value: update
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+
+# ── PostgreSQL Database ────────────────────────────────────────────
+databases:
+  - name: library-db
+    plan: free
+    region: oregon
