@@ -1,0 +1,3 @@
+com\librarymanagement\service\AuthServiceTest.class
+com\librarymanagement\service\BookServiceTest.class
+com\librarymanagement\service\LoanServiceTest.class
