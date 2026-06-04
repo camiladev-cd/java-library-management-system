@@ -353,6 +353,6 @@ URL en producción: https://java-library-management-system.onrender.com/swagger-
 
 <div align="center">
 
-Made with ☕ by [Sergio Silva](https://github.com/camiladev-cd)
+Made with ☕ by [Camila Dueñas](https://github.com/camiladev-cd)
 
 </div>

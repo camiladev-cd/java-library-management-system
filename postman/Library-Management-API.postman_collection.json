@@ -1,0 +1,68 @@
+{
+  "info": {
+    "name": "Library Management API",
+    "description": "REST API for managing books, members and loans.\n\n**How to use:**\n1. Run the Login request — the token saves automatically\n2. All requests use {{token}} automatically\n3. Change {{base_url}} for local or production",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {"key": "base_url", "value": "https://java-library-management-system.onrender.com", "type": "string"},
+    {"key": "token", "value": "", "type": "string"}
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {"mode": "raw", "raw": "{\n  \"email\": \"admin@library.com\",\n  \"password\": \"password123\"\n}"},
+            "url": {"raw": "{{base_url}}/api/auth/register", "host": ["{{base_url}}"], "path": ["api","auth","register"]}
+          }
+        },
+        {
+          "name": "Login",
+          "event": [{"listen": "test", "script": {"exec": ["const r = pm.response.json();", "if (r.token) pm.collectionVariables.set('token', r.token);"], "type": "text/javascript"}}],
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {"mode": "raw", "raw": "{\n  \"email\": \"admin@library.com\",\n  \"password\": \"password123\"\n}"},
+            "url": {"raw": "{{base_url}}/api/auth/login", "host": ["{{base_url}}"], "path": ["api","auth","login"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Books",
+      "item": [
+        {"name": "List all books", "request": {"method": "GET", "header": [{"key": "Authorization", "value": "Bearer {{token}}"}], "url": {"raw": "{{base_url}}/api/v1/books", "host": ["{{base_url}}"], "path": ["api","v1","books"]}}},
+        {"name": "Get book by ID", "request": {"method": "GET", "header": [{"key": "Authorization", "value": "Bearer {{token}}"}], "url": {"raw": "{{base_url}}/api/v1/books/1", "host": ["{{base_url}}"], "path": ["api","v1","books","1"]}}},
+        {"name": "Available books", "request": {"method": "GET", "header": [{"key": "Authorization", "value": "Bearer {{token}}"}], "url": {"raw": "{{base_url}}/api/v1/books/available", "host": ["{{base_url}}"], "path": ["api","v1","books","available"]}}},
+        {"name": "Create book (ADMIN)", "request": {"method": "POST", "header": [{"key": "Authorization", "value": "Bearer {{token}}"},{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\n  \"title\": \"Clean Code\",\n  \"author\": \"Robert C. Martin\",\n  \"isbn\": \"978-0132350884\",\n  \"category\": \"TECHNOLOGY\"\n}"}, "url": {"raw": "{{base_url}}/api/v1/books", "host": ["{{base_url}}"], "path": ["api","v1","books"]}}},
+        {"name": "Update book (ADMIN)", "request": {"method": "PUT", "header": [{"key": "Authorization", "value": "Bearer {{token}}"},{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\n  \"title\": \"Clean Code Updated\",\n  \"author\": \"Robert C. Martin\",\n  \"isbn\": \"978-0132350884\",\n  \"category\": \"TECHNOLOGY\"\n}"}, "url": {"raw": "{{base_url}}/api/v1/books/1", "host": ["{{base_url}}"], "path": ["api","v1","books","1"]}}},
+        {"name": "Delete book (ADMIN)", "request": {"method": "DELETE", "header": [{"key": "Authorization", "value": "Bearer {{token}}"}], "url": {"raw": "{{base_url}}/api/v1/books/1", "host": ["{{base_url}}"], "path": ["api","v1","books","1"]}}}
+      ]
+    },
+    {
+      "name": "Members",
+      "item": [
+        {"name": "List all members (ADMIN)", "request": {"method": "GET", "header": [{"key": "Authorization", "value": "Bearer {{token}}"}], "url": {"raw": "{{base_url}}/api/v1/members", "host": ["{{base_url}}"], "path": ["api","v1","members"]}}},
+        {"name": "Get member by ID", "request": {"method": "GET", "header": [{"key": "Authorization", "value": "Bearer {{token}}"}], "url": {"raw": "{{base_url}}/api/v1/members/1", "host": ["{{base_url}}"], "path": ["api","v1","members","1"]}}},
+        {"name": "Create member (ADMIN)", "request": {"method": "POST", "header": [{"key": "Authorization", "value": "Bearer {{token}}"},{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\n  \"name\": \"Camila Dev\",\n  \"email\": \"camila@library.com\",\n  \"phone\": \"3001234567\"\n}"}, "url": {"raw": "{{base_url}}/api/v1/members", "host": ["{{base_url}}"], "path": ["api","v1","members"]}}},
+        {"name": "Update member (ADMIN)", "request": {"method": "PUT", "header": [{"key": "Authorization", "value": "Bearer {{token}}"},{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\n  \"name\": \"Camila Dev Updated\",\n  \"email\": \"camila@library.com\",\n  \"phone\": \"3009876543\"\n}"}, "url": {"raw": "{{base_url}}/api/v1/members/1", "host": ["{{base_url}}"], "path": ["api","v1","members","1"]}}},
+        {"name": "Delete member (ADMIN)", "request": {"method": "DELETE", "header": [{"key": "Authorization", "value": "Bearer {{token}}"}], "url": {"raw": "{{base_url}}/api/v1/members/1", "host": ["{{base_url}}"], "path": ["api","v1","members","1"]}}}
+      ]
+    },
+    {
+      "name": "Loans",
+      "item": [
+        {"name": "List all loans", "request": {"method": "GET", "header": [{"key": "Authorization", "value": "Bearer {{token}}"}], "url": {"raw": "{{base_url}}/api/v1/loans", "host": ["{{base_url}}"], "path": ["api","v1","loans"]}}},
+        {"name": "Get loan by ID", "request": {"method": "GET", "header": [{"key": "Authorization", "value": "Bearer {{token}}"}], "url": {"raw": "{{base_url}}/api/v1/loans/1", "host": ["{{base_url}}"], "path": ["api","v1","loans","1"]}}},
+        {"name": "Loans by member", "request": {"method": "GET", "header": [{"key": "Authorization", "value": "Bearer {{token}}"}], "url": {"raw": "{{base_url}}/api/v1/loans/member/1", "host": ["{{base_url}}"], "path": ["api","v1","loans","member","1"]}}},
+        {"name": "Create loan", "request": {"method": "POST", "header": [{"key": "Authorization", "value": "Bearer {{token}}"},{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\n  \"bookId\": 1,\n  \"memberId\": 1\n}"}, "url": {"raw": "{{base_url}}/api/v1/loans", "host": ["{{base_url}}"], "path": ["api","v1","loans"]}}},
+        {"name": "Return book", "request": {"method": "PATCH", "header": [{"key": "Authorization", "value": "Bearer {{token}}"}], "url": {"raw": "{{base_url}}/api/v1/loans/1/return", "host": ["{{base_url}}"], "path": ["api","v1","loans","1","return"]}}}
+      ]
+    }
+  ]
+}
